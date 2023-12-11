@@ -41,7 +41,7 @@ public class Day10 {
         System.out.println(String.format("Part 1: %d", (visitedPoints.size() / 2)));
         cleanMatrix();
         scanPoints();
-        System.out.println(insidePoints.size());
+        System.out.println(String.format("Part 2: %d ",insidePoints.size()));
     }
 
     private static Point findFirstValidPath(Point point) {
