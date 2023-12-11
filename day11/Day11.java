@@ -14,21 +14,15 @@ public class Day11 {
     private static List<Point> points = new ArrayList<>();
     private static Integer expanse;
     public static void main (String ... args) {
-
-        part1();
-        part2();
+        
+        calculate(1, 2);
+        calculate(2, 1000000);
     }
 
-    private static void part1() {
-        expanse = 2;
+    private static void calculate(int part, int expanseCoefficient) {
+        expanse = expanseCoefficient;
         expandColumns(getEmptyColumnsAndPoints(ReadFiles.getInputData("day11/input.txt")));
-        System.out.println(String.format("Part 1: %d", calculateDistance()));
-    }
-
-    private static void part2() {
-        expanse = 1000000;
-        expandColumns(getEmptyColumnsAndPoints(ReadFiles.getInputData("day11/input.txt")));
-        System.out.println(String.format("Part 2: %d", calculateDistance()));
+        System.out.println(String.format("Part %d: %d",part, calculateDistance()));
     }
 
     private static BitSet getLineAsBitSet(String line) {
@@ -81,5 +75,4 @@ public class Day11 {
             }
         }
     }
-
 }
