@@ -6,6 +6,7 @@ import utils.ReadFiles;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Day11 {
@@ -20,25 +21,21 @@ public class Day11 {
 
     private static void part1() {
         expanse = 2;
-        var lines = ReadFiles.getInputData("day11/input.txt");
-        expandColumns(getEmptyColumnsAndPoints(lines));
+        expandColumns(getEmptyColumnsAndPoints(ReadFiles.getInputData("day11/input.txt")));
         System.out.println(String.format("Part 1: %d", calculateDistance()));
     }
 
     private static void part2() {
         expanse = 1000000;
-        var lines = ReadFiles.getInputData("day11/input.txt");
-        expandColumns(getEmptyColumnsAndPoints(lines));
+        expandColumns(getEmptyColumnsAndPoints(ReadFiles.getInputData("day11/input.txt")));
         System.out.println(String.format("Part 2: %d", calculateDistance()));
     }
 
     private static BitSet getLineAsBitSet(String line) {
-
         BitSet bitSet = new BitSet(line.length());
         int i = 0;
         for(char c : line.toCharArray()) {
-            if(c == '#')
-                bitSet.set(i);
+            if(c == '#') bitSet.set(i);
             i++;
         }
         return bitSet;
@@ -48,11 +45,10 @@ public class Day11 {
         Long totalDistance = 0L;
         while(points.size() > 1) {
             Point point = points.remove(0);
-            for(Point p : points) {
+            for(Point p : points) 
                 totalDistance += point.getManhattan(p);
-            }
         }
-        return  totalDistance;
+        return totalDistance;
     }
 
     private static List<Integer> getEmptyColumnsAndPoints(List<String> lines) {
@@ -64,14 +60,8 @@ public class Day11 {
             if(bLine.cardinality() == 0)
                 i+=expanse - 1;
             else {
-                int pos = 0;
-                while(pos >= 0 && pos < line.length()) {
-                    pos = bLine.nextSetBit(pos);
-                    if(pos >= 0) {
-                        points.add(new Point(i, pos));
-                        pos+=1;
-                    }
-                }
+                for(Integer p : bLine.stream().mapToObj(Integer::valueOf).collect(Collectors.toList()))
+                    points.add(new Point(i, p));
             }
             i++;
             emptyColumns.or(bLine);
@@ -87,7 +77,7 @@ public class Day11 {
             int col = point.getColumn();
 
             if((leftExpandedCols = emptyCols.stream().filter(v -> v <= col).collect(Collectors.toList()).size()) > 0) {
-                point.setColumn(point.getColumn() + (leftExpandedCols * (expanse - 1)));
+                point.setColumn(col + (leftExpandedCols * (expanse - 1)));
             }
         }
     }
