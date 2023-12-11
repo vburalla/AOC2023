@@ -3,7 +3,6 @@ package day10;
 import utils.Point;
 import utils.ReadFiles;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -41,7 +40,7 @@ public class Day10 {
         System.out.println(String.format("Part 1: %d", (visitedPoints.size() / 2)));
         cleanMatrix();
         scanPoints();
-        System.out.println(insidePoints.size());
+        System.out.println(String.format("Part 2: %d ",insidePoints.size()));
     }
 
     private static Point findFirstValidPath(Point point) {
