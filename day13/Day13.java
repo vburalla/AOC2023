@@ -3,6 +3,7 @@ package day13;
 import utils.ReadFiles;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 public class Day13 {
@@ -23,15 +24,39 @@ public class Day13 {
         System.out.println(sum);
     }
 
+
     private static Integer getResult(List<String> lines ) {
-        List<String> newLines = transpose(lines);
-        Integer result = 0;
-        Integer total = 0;
-        total =((result = analizeMirror(newLines)) != null)? result : 0;
-        return ((result = analizeMirror(lines)) != null)? total + 100 * result : total;
+
+        Integer result = analyzeMirror(lines);
+        Integer total = result != null? 100 * result : 0;
+        result = analyzeMirror(transpose(lines));
+        return result != null? total + result : total;
+
     }
 
-    private static Integer analizeMirror(List<String> patterns) {
+    private static Integer analyzeMirror(List<String> patterns) {
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        boolean found = false;
+        while(i < (patterns.size() - 1) && !found) {
+            if(patterns.get(i).equals(patterns.get(i+1))) {
+                found = true;
+                j= i - 1;
+                k = i + 2;
+                while (found && j >= 0 && k < patterns.size()) {
+                    found = patterns.get(j).equals(patterns.get(k));
+                    j--;
+                    k++;
+                }
+            }
+            i++;
+        }
+        return found? i : null;
+    }
+
+    private static Integer analyzeMirrorChangingOne(List<String> patterns) {
 
         int i = 0;
         int j = 0;
@@ -65,5 +90,20 @@ public class Day13 {
             transposedLines.add(sb.toString());
         }
         return transposedLines;
+    }
+
+    private static int charDifference(String s1, String s2) {
+
+        int pos = -1;
+        int distinct = 0;
+        int i = 0;
+        while(i < s1.length() && distinct < 2) {
+            if(s1.charAt(i) != s2.charAt(i)) {
+                distinct++;
+                pos = i;
+            }
+            i++;
+        }
+        return distinct < 2? pos : -1;
     }
 }
