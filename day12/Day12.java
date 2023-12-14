@@ -13,13 +13,14 @@ public class Day12 {
         List<Arrangement> arrangements = new ArrayList<>();
         Long solutions = 0L;
         Long solutions2 = 0L;
-
+        int i = 0;
         for (String line : lines) {
+            i++;
             Arrangement arrangement = new Arrangement(line);
-            solutions += getPossibleSolutions(arrangement.getArrange()+".", arrangement.getSizes(), 0);
+            //solutions += getPossibleSolutions(arrangement.getArrange()+".", arrangement.getSizes(), 0);
             solutions2 += getPossibleSolutions(arrangement.getLongArrange()+".", arrangement.getLongSizes(), 0);
         }
-        System.out.println(solutions);
+        //System.out.println(solutions);
         System.out.println(solutions2);
     }
 
