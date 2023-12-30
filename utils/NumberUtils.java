@@ -37,4 +37,16 @@ public class NumberUtils {
             b = 0;
         return a + b;
     }
+
+    public static boolean eval(Integer value1, Integer value2, String expression) {
+
+        return switch(expression) {
+            case ">" -> value1 > value2;
+            case "<" -> value1 < value2;
+            case ">=","!<" -> value1 >= value2;
+            case "<=","!>" -> value1 <= value2;
+            default -> throw new RuntimeException("Method not allowed");
+        };
+    }
+
 }
